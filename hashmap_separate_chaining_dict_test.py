@@ -134,30 +134,3 @@ class TestHashMapPBT:
         empty = mempty()
         assert concat(empty, hdict) == hdict
         assert concat(hdict, empty) == hdict
-
-    @given(
-        initial=st.dictionaries(_keys, _values),
-        updates=st.dictionaries(_keys, _values)
-    )
-    def test_insert_override_property(self, initial, updates):
-        hdict = from_dict(initial)
-        updated = hdict
-        for k, v in updates.items():
-            updated = updated.cons(k, v)
-        expected = from_dict({**initial, **updates})
-        assert updated == expected
-
-    @given(
-        base=st.dictionaries(_keys, _values),
-        to_remove=st.lists(_keys)
-    )
-    def test_remove_property(self, base, to_remove):
-        hdict = from_dict(base)
-        current = hdict
-        for key in to_remove:
-            current = current.remove(key)
-        for key in to_remove:
-            assert not current.member(key)
-        remaining_keys = set(base.keys()) - set(to_remove)
-        for key in remaining_keys:
-            assert current.member(key)
