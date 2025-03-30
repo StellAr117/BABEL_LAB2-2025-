@@ -90,7 +90,7 @@ class HashMapSeparateChainingDict:
             return True
         if isinstance(key1, float) and isinstance(key2, float):
             return (math.isnan(key1) and math.isnan(key2)) or key1 == key2
-        if type(key1) != type(key2):
+        if type(key1) is not type(key2):
             return False
         return key1 == key2
 
