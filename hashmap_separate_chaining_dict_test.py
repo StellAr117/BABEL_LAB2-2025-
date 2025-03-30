@@ -1,4 +1,3 @@
-import pytest
 import itertools
 from hypothesis import given, strategies as st
 from hashmap_separate_chaining_dict import (
@@ -17,12 +16,13 @@ from hashmap_separate_chaining_dict import (
     reduce
 )
 
+
 class TestHashMapSeparateChainingDict:
     def test_api(self):
         empty = HashMapSeparateChainingDict()
         l1 = cons(None, "c", cons(2, "b", cons("a", 1, empty)))
         l2 = cons("a", 1, cons(None, "c", cons(2, "b", empty)))
-        
+
         assert str(empty) == "{}"
         assert str(l1) in [
             "{'a': 1, 2: 'b', None: 'c'}",
@@ -35,20 +35,22 @@ class TestHashMapSeparateChainingDict:
         assert empty != l1
         assert empty != l2
         assert l1 == l2
-        
+
         assert length(empty) == 0
         assert length(l1) == 3
         assert length(l2) == 3
-        
-        assert str(remove(l1, None)) in ["{2: 'b', 'a': 1}", "{'a': 1, 2: 'b'}"]
-        assert str(remove(l1, "a")) in ["{2: 'b', None: 'c'}", "{None: 'c', 2: 'b'}"]
-        
+
+        assert str(remove(l1, None)) in ["{2: 'b', 'a': 1}",
+                                         "{'a': 1, 2: 'b'}"]
+        assert str(remove(l1, "a")) in ["{2: 'b', None: 'c'}",
+                                        "{None: 'c', 2: 'b'}"]
+
         assert not member(None, empty)
         assert member(None, l1)
         assert member("a", l1)
         assert member(2, l1)
         assert not member(3, l1)
-        
+
         assert to_list(l1) in map(list, itertools.permutations(
             [("a", 1), (2, "b"), (None, "c")]
         ))
@@ -57,14 +59,14 @@ class TestHashMapSeparateChainingDict:
         assert concat(l1, l2) == from_list(
             [(2, "B"), ("a", 1), (2, "b"), (None, "c")]
         )
-        
+
         buf = []
         for e in l1:
             buf.append(e)
         assert buf in map(list, itertools.permutations(["a", 2, None]))
-        
+
         lst = (list(map(lambda e: e[0], to_list(l1))) +
-              list(map(lambda e: e[0], to_list(l2))))
+               list(map(lambda e: e[0], to_list(l2))))
         for e in l1:
             lst.remove(e)
         for e in l2:
@@ -73,10 +75,19 @@ class TestHashMapSeparateChainingDict:
 
     def test_filter(self):
         data = from_list([(1, 1), (2, "a"), ("b", 3), ("4", 4), (5, None)])
+
+        # Test filtering by integer keys
         filtered_int_keys = filter(data, lambda k, v: isinstance(k, int))
-        assert sorted(to_list(filtered_int_keys)) == [(1, 1), (2, "a"), (5, None)]
+        result_keys = to_list(filtered_int_keys)
+        expected_keys = [(1, 1), (2, "a"), (5, None)]
+        assert sorted(result_keys, key=str) == sorted(expected_keys, key=str)
+
+        # Test filtering by integer values
         filtered_int_values = filter(data, lambda k, v: isinstance(v, int))
-        assert sorted(to_list(filtered_int_values)) == [(1, 1), ("4", 4), ("b", 3)]
+        result_values = to_list(filtered_int_values)
+        expected_values = [(1, 1), ("4", 4), ("b", 3)]
+        assert sorted(result_values, key=str) == sorted(
+            expected_values, key=str)
 
     def test_mmap(self):
         original = from_list({1: 1, 2: 2, 3: 3})
@@ -97,6 +108,7 @@ class TestHashMapSeparateChainingDict:
         assert concat(empty, data) == data
         assert concat(data, empty) == data
         assert length(empty) == 0
+
 
 class TestHashMapPBT:
     _keys = st.one_of(st.integers(), st.text(), st.floats(), st.none())
