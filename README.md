@@ -9,11 +9,13 @@ preserving the original data.
 ## Project structure
 
 - `hashmap_separate_chaining_dict.py`
+
 -- Implementation of immutable hashmap using separate chaining.
   Core features: `cons`, `remove`, `member`, `filter`, `mmap`, `reduce`.  
   Immutable semantics (returns new instances on modification).  
 
 - `hashmap_separate_chaining_dict_test.py`
+
 -- Unit and property-based tests (PBT).
   Validates: insertion/removal, equality checks, monoid laws,
   filtering/mapping operations.  
