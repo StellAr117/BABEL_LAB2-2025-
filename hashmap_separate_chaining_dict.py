@@ -142,11 +142,6 @@ class HashMapSeparateChainingDict:
             acc = reducer(k, v, acc)
         return acc
 
-    def _hash(self, key):
-        if key is None:
-            return hash(key) % len(self.buckets)
-        return hash(key) % len(self.buckets)
-
     # ----------- Magic Methods -----------
     def __eq__(self, other):
         # Compare sorted entries (order-insensitive)

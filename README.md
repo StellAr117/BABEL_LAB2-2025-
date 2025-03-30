@@ -1,18 +1,22 @@
 # GROUP-NAME - lab NUMBER - variant NUMBER
 
-A Python implementation of an immutable hashmap using separate chaining for collision resolution.
+A Python implementation of an immutable hashmap using separate
+chaining for collision resolution.
 Designed with functional programming patterns,
 this structure returns a new instance on every modification,
 preserving the original data.
 
 ## Project structure
 
-- `hashmap_separate_chaining_dict.py` -- Implementation of immutable hashmap using separate chaining.  
+- `hashmap_separate_chaining_dict.py` -- Implementation of
+immutable hashmap using separate chaining.  
   Core features: `cons`, `remove`, `member`, `filter`, `mmap`, `reduce`.  
   Immutable semantics (returns new instances on modification).  
 
-- `hashmap_separate_chaining_dict_test.py` -- Unit and property-based tests (PBT).  
-  Validates: insertion/removal, equality checks, monoid laws, filtering/mapping operations.  
+- `hashmap_separate_chaining_dict_test.py` -- Unit and
+property-based tests (PBT).  
+  Validates: insertion/removal, equality checks, monoid laws,
+  filtering/mapping operations.  
   Uses Hypothesis for generative testing.  
 
 ## Features
@@ -34,7 +38,8 @@ preserving the original data.
    - `concat(other)`: Merge two hashmaps (last write wins on conflicts).  
 
 - **Immutability**  
-  All operations return new instances, ensuring thread safety and predictable state transitions.
+  All operations return new instances, ensuring thread safety and
+   predictable state transitions.
 
 ## Contributors
 
@@ -63,10 +68,10 @@ preserving the original data.
 
 Comparison: Mutable vs. Immutable HashMaps
 
-| **Aspect**               | **Immutable**                          | **Mutable**                          |
-|--------------------------|----------------------------------------|---------------------------------------|
-| **State Changes**         | Returns new instances on modification. | Modifies internal state directly.     |
-| **Thread Safety**         | ✅ Safe across threads.                | ❌ Requires synchronization.          |
-| **Memory Efficiency**     | Higher (shares unchanged buckets).     | Lower (in-place updates).             |
-| **Use Cases**             | Functional workflows, versioned data.  | High-frequency updates, low-latency.  |
-| **Example Scenario**      | Building a history of dictionary states. | Caching or real-time data processing. |
+| **Aspect**          | **Immutable**               | **Mutable**              |
+|---------------------|-----------------------------|--------------------------|
+| **State Changes**   | New instances on modify     | In-place state updates   |
+| **Thread Safety**   | ✅ Thread-safe              | ❌ Needs sync           |
+| **Memory Efficiency** | Shared buckets (optimized)| Full copies (higher cost)|
+| **Use Cases**       | Functional/versioned data   | High-speed updates       |
+| **Example**         | Data history tracking       | Real-time caching        |
